@@ -1,0 +1,6 @@
+{
+  "page_count": 604,
+  "source": "https://api.quran.com/api/v4/verses/by_page/{page}",
+  "generated_from": "quran_error_corrector/web/data/quran_pages.json",
+  "page_template": "data/pages/{page:03d}.json"
+}

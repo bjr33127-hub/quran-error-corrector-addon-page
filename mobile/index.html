@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0f766e">
+    <title>QEC CSV Mobile</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="app.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-topbar">
+        <div class="brand">
+          <span class="brand-mark">QEC</span>
+          <div>
+            <h1>Qur'an Error CSV</h1>
+            <p id="statusLine">Chargement...</p>
+          </div>
+        </div>
+        <button id="queueButton" class="queue-button" type="button">
+          <span id="queueCount">0</span>
+          <span>CSV</span>
+        </button>
+      </header>
+
+      <main class="workspace">
+        <section class="mushaf-card" aria-label="Mushaf">
+          <div class="page-toolbar">
+            <button id="prevPage" class="icon-button" type="button" aria-label="Page precedente">‹</button>
+            <label class="page-input-wrap">
+              <span>Page</span>
+              <input id="pageInput" type="number" min="1" max="604" value="1" inputmode="numeric">
+            </label>
+            <button id="nextPage" class="icon-button" type="button" aria-label="Page suivante">›</button>
+          </div>
+          <div id="pageMeta" class="page-meta">Page 1</div>
+          <div id="mushafStage" class="mushaf-stage">
+            <div id="mushafPage" class="mushaf-page" dir="rtl"></div>
+          </div>
+        </section>
+
+        <section class="control-sheet" aria-label="Export CSV">
+          <div class="selection-summary">
+            <div>
+              <span class="eyebrow">Erreur</span>
+              <strong id="selectionRange">Aucune selection</strong>
+            </div>
+            <button id="clearSelection" type="button">Effacer</button>
+          </div>
+
+          <div class="form-grid">
+            <label>
+              <span>Type</span>
+              <select id="errorType">
+                <option>Mot</option>
+                <option>Transition</option>
+                <option>Waqf</option>
+                <option>Tajwid</option>
+              </select>
+            </label>
+            <label>
+              <span>Difficulte</span>
+              <select id="severity">
+                <option>Difficile</option>
+                <option>Oublie</option>
+                <option>Repete</option>
+              </select>
+            </label>
+            <label>
+              <span>Couleur</span>
+              <input id="highlightColor" type="color" value="#ffd76a">
+            </label>
+            <label>
+              <span>Langue carte</span>
+              <select id="cardLanguage">
+                <option value="fr">Francais</option>
+                <option value="en">English</option>
+                <option value="ar">Arabic</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="note-field">
+            <span>Note perso</span>
+            <textarea id="notes" rows="2" placeholder="Ex: confusion avec la fin du verset precedent"></textarea>
+          </label>
+
+          <div class="primary-actions">
+            <button id="addToCsv" class="primary" type="button" disabled>Ajouter au CSV</button>
+            <button id="downloadCsv" class="secondary" type="button" disabled>Telecharger CSV</button>
+          </div>
+
+          <div class="preview-tabs">
+            <button class="tab active" data-tab="front" type="button">Recto</button>
+            <button class="tab" data-tab="back" type="button">Verso</button>
+          </div>
+          <div id="anchorPlan" class="anchor-plan"></div>
+          <div id="previewFront" class="preview active"></div>
+          <div id="previewBack" class="preview"></div>
+        </section>
+      </main>
+
+      <dialog id="queueDialog" class="queue-dialog">
+        <div class="dialog-head">
+          <h2>Cartes en attente</h2>
+          <button id="closeQueue" class="icon-button" type="button" aria-label="Fermer">×</button>
+        </div>
+        <div id="queueList" class="queue-list"></div>
+        <div class="dialog-actions">
+          <button id="clearQueue" type="button">Vider</button>
+          <button id="downloadCsvDialog" class="primary" type="button">Telecharger CSV</button>
+        </div>
+      </dialog>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
