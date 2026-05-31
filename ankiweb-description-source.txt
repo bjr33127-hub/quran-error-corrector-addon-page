@@ -1,0 +1,52 @@
+
+<h2>Qur'an Error Corrector</h2>
+
+<p><strong>Qur'an Error Corrector</strong> is an Anki add-on for one very specific moment: you have just finished your normal Qur'an revision, you noticed a mistake, and you want Anki/FSRS to help you repair that exact weak spot without taking over your whole revision routine.</p>
+
+<p>Instead of turning every page into a flashcard, the add-on lets you open a Madani-style mushaf page, select the word or passage where the mistake happened, and create a targeted correction card.</p>
+
+<p><img src="https://bjr33127-hub.github.io/quran-error-corrector-addon-page/assets/cover.png" alt="Qur'an Error Corrector overview" width="800"></p>
+
+<h3>How it works</h3>
+<ol>
+  <li>Revise normally outside Anki.</li>
+  <li>Open the add-on from Anki's Tools menu.</li>
+  <li>Select the word or passage where you made a mistake.</li>
+  <li>Create or update the card.</li>
+  <li>Let Anki/FSRS bring that correction back at the right time.</li>
+</ol>
+
+<p><img src="https://bjr33127-hub.github.io/quran-error-corrector-addon-page/assets/select-error-create-card.gif" alt="Selecting a Qur'an mistake and creating a card" width="800"></p>
+
+<h3>What the card contains</h3>
+<ul>
+  <li><strong>Front:</strong> the closest useful half-page context before the mistake.</li>
+  <li><strong>Back:</strong> the full page with the mistake highlighted.</li>
+  <li><strong>Anchoring help:</strong> a short correction routine based on the difficulty you chose.</li>
+  <li><strong>Automatic tags:</strong> surah, mistake type, and difficulty.</li>
+</ul>
+
+<p><img src="https://bjr33127-hub.github.io/quran-error-corrector-addon-page/assets/card-anatomy.png" alt="Front and back card anatomy" width="800"></p>
+
+<h3>Built for Qur'an revision</h3>
+<p>The add-on does not pretend that Qur'an review is a pile of isolated snippets. It keeps the page as the mental landmark, but uses half-page context when creating the prompt. It also avoids splitting the prompt at arbitrary places: half-page boundaries are adjusted to clear stopping points or verse endings whenever possible.</p>
+
+<p><img src="https://bjr33127-hub.github.io/quran-error-corrector-addon-page/assets/workflow.png" alt="Workflow diagram" width="800"></p>
+
+<h3>Languages</h3>
+<p>The interface and generated cards are available in multiple languages: <strong>French, Arabic, English</strong>, plus Spanish, Turkish, and Indonesian. Arabic uses right-to-left layout automatically.</p>
+
+<h3>Requirements and notes</h3>
+<ul>
+  <li>Designed for Anki 25.x.</li>
+  <li>Works best with FSRS enabled in your deck options.</li>
+  <li>The add-on creates targeted correction cards; Anki remains responsible for scheduling.</li>
+  <li>Uses QCF V2 page fonts for the rendered mushaf pages.</li>
+</ul>
+
+<p><img src="https://bjr33127-hub.github.io/quran-error-corrector-addon-page/assets/review-generated-card.gif" alt="Reviewing a generated correction card in Anki" width="800"></p>
+
+<h3>Good fit if...</h3>
+<p>You already have a Qur'an revision routine, such as revising a juz' per day, and you only want spaced repetition for the half-pages or passages where mistakes actually happen.</p>
+
+<p>Project page and media: <a href="https://bjr33127-hub.github.io/quran-error-corrector-addon-page">https://bjr33127-hub.github.io/quran-error-corrector-addon-page</a></p>
