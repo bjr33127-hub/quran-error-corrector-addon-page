@@ -120,6 +120,31 @@ h1 {
   white-space: nowrap;
 }
 
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.ui-language {
+  display: grid;
+  gap: 3px;
+  min-width: 88px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.ui-language select {
+  height: 30px;
+  min-width: 0;
+  padding: 3px 24px 3px 8px;
+  color: var(--green-dark);
+  font-size: 12px;
+  font-weight: 750;
+}
+
 .queue-button {
   display: grid;
   min-width: 64px;
@@ -584,6 +609,25 @@ textarea {
   font-size: 12px;
 }
 
+html[dir="rtl"] body {
+  direction: rtl;
+}
+
+html[dir="rtl"] .mushaf-page,
+html[dir="rtl"] .quran-line,
+html[dir="rtl"] .qec-page,
+html[dir="rtl"] .qec-line {
+  direction: rtl;
+}
+
+html[dir="rtl"] .qec-card[dir="ltr"] {
+  direction: ltr;
+}
+
+html[dir="rtl"] .qec-card[dir="rtl"] {
+  direction: rtl;
+}
+
 .empty {
   color: var(--muted);
   text-align: center;
@@ -617,7 +661,38 @@ textarea {
 
 @media (max-width: 420px) {
   .brand p {
-    max-width: 170px;
+    max-width: 150px;
+  }
+
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+  }
+
+  h1 {
+    font-size: 16px;
+  }
+
+  .topbar-actions {
+    gap: 6px;
+  }
+
+  .ui-language {
+    min-width: 76px;
+  }
+
+  .ui-language span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .ui-language select {
+    height: 28px;
+    font-size: 11px;
   }
 
   .form-grid {

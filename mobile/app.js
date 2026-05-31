@@ -4,32 +4,338 @@ const STOP_MARKS = ["\u06d6", "\u06d7", "\u06d8", "\u06da", "\u06db"];
 const UTHMANIC_FONT_URL = "https://verses.quran.foundation/fonts/quran/hafs/uthmanic_hafs/UthmanicHafs1Ver18.woff2";
 const QCF_FONT_URL = "https://verses.quran.foundation/fonts/quran/hafs/v2/woff2/p{page}.woff2";
 const STORAGE_KEY = "qec-mobile-csv-cards-v1";
+const UI_LANGUAGE_KEY = "qec-mobile-csv-ui-language-v1";
 const BASMALA = "\u0628\u0650\u0633\u0652\u0645\u0650 \u0671\u0644\u0644\u0651\u064e\u0647\u0650 \u0671\u0644\u0631\u0651\u064e\u062d\u0652\u0645\u064e\u0670\u0646\u0650 \u0671\u0644\u0631\u0651\u064e\u062d\u0650\u064a\u0645\u0650";
+
+const LANGUAGE_OPTIONS = [
+  { code: "fr", label: "Français" },
+  { code: "ar", label: "العربية" },
+  { code: "en", label: "English" },
+  { code: "es", label: "Español" },
+  { code: "tr", label: "Türkçe" },
+  { code: "id", label: "Bahasa Indonesia" },
+];
+
+const CHOICES = {
+  errorTypes: [
+    { value: "word", labels: { fr: "Mot", ar: "كلمة", en: "Word", es: "Palabra", tr: "Kelime", id: "Kata" } },
+    { value: "transition", labels: { fr: "Transition", ar: "انتقال", en: "Transition", es: "Transición", tr: "Geçiş", id: "Transisi" } },
+    { value: "waqf", labels: { fr: "Waqf", ar: "وقف", en: "Waqf", es: "Waqf", tr: "Vakıf", id: "Waqf" } },
+    { value: "tajwid", labels: { fr: "Tajwid", ar: "تجويد", en: "Tajwid", es: "Tajwid", tr: "Tecvid", id: "Tajwid" } },
+  ],
+  severities: [
+    { value: "difficult", labels: { fr: "Difficile", ar: "صعب", en: "Difficult", es: "Difícil", tr: "Zor", id: "Sulit" } },
+    { value: "forgotten", labels: { fr: "Oublié", ar: "منسي", en: "Forgotten", es: "Olvidado", tr: "Unutuldu", id: "Lupa" } },
+    { value: "repeated", labels: { fr: "Répété", ar: "متكرر", en: "Repeated", es: "Repetido", tr: "Tekrarlı", id: "Berulang" } },
+  ],
+};
 
 const STRINGS = {
   fr: {
-    task: "Recite le contexte avant l'erreur, puis continue jusqu'au passage travaille.",
-    anchor: "Aide pour memoriser cette erreur : repete {window}x l'endroit ou tu t'es trompe avec une ligne avant et une ligne apres, puis repete {half}x la demi-page.",
+    appTitle: "Qur'an Error CSV",
+    siteTitle: "Qur'an Error CSV Mobile",
+    loading: "Chargement...",
+    loadingCorpus: "Chargement du corpus...",
+    ready: "Prêt",
+    loadingPage: "Chargement page {page}...",
+    loadFailed: "Impossible de charger les données.",
+    emptySelection: "Aucune sélection",
+    selectionEmptyError: "Sélection vide.",
+    noWordError: "La sélection ne contient aucun mot.",
+    selectionCleared: "Sélection effacée.",
+    csvUpdated: "Carte CSV mise à jour.",
+    csvAdded: "Carte ajoutée au CSV.",
+    queueEmpty: "Aucune carte en attente.",
+    queueCleared: "File CSV vidée.",
+    csvDownloaded: "CSV téléchargé.",
+    pageMeta: "Page {page} | {lines} lignes | {range}",
+    pageNumber: "Page {page}",
+    page: "Page",
+    previousPage: "Page précédente",
+    nextPage: "Page suivante",
+    mushafLabel: "Mushaf",
+    exportLabel: "Export CSV",
+    error: "Erreur",
+    clear: "Effacer",
+    type: "Type",
+    difficulty: "Difficulté",
+    color: "Couleur",
+    interfaceLanguage: "Langue de l'interface",
+    interfaceLanguageShort: "Langue",
+    cardLanguage: "Langue carte",
+    personalNote: "Note perso",
+    notePlaceholder: "Ex: confusion avec la fin du verset précédent",
+    addToCsv: "Ajouter au CSV",
+    downloadCsv: "Télécharger CSV",
+    front: "Recto",
+    back: "Verso",
+    queuedCards: "Cartes en attente",
+    close: "Fermer",
+    clearQueue: "Vider",
+    remove: "Retirer",
+    csv: "CSV",
+    task: "Récite le contexte avant l'erreur, puis continue jusqu'au passage travaillé.",
+    anchor: "Aide pour mémoriser cette erreur : répète {window}x l'endroit où tu t'es trompé avec une ligne avant et une ligne après, puis répète {half}x la demi-page.",
     rangeSame: "Sourate {surah}, verset {ayah}, mot {pos}",
     rangeSameWords: "Sourate {surah}, verset {ayah}, mots {start}-{end}",
     rangeAcross: "Sourate {surah}, {from} -> {to}",
     ayahEnd: "fin du verset",
+    ayahEndShort: "fin",
   },
   en: {
+    appTitle: "Qur'an Error CSV",
+    siteTitle: "Qur'an Error CSV Mobile",
+    loading: "Loading...",
+    loadingCorpus: "Loading corpus...",
+    ready: "Ready",
+    loadingPage: "Loading page {page}...",
+    loadFailed: "Unable to load the data.",
+    emptySelection: "No selection",
+    selectionEmptyError: "Empty selection.",
+    noWordError: "The selection does not contain any word.",
+    selectionCleared: "Selection cleared.",
+    csvUpdated: "CSV card updated.",
+    csvAdded: "Card added to CSV.",
+    queueEmpty: "No queued cards.",
+    queueCleared: "CSV queue cleared.",
+    csvDownloaded: "CSV downloaded.",
+    pageMeta: "Page {page} | {lines} lines | {range}",
+    pageNumber: "Page {page}",
+    page: "Page",
+    previousPage: "Previous page",
+    nextPage: "Next page",
+    mushafLabel: "Mushaf",
+    exportLabel: "CSV export",
+    error: "Error",
+    clear: "Clear",
+    type: "Type",
+    difficulty: "Difficulty",
+    color: "Color",
+    interfaceLanguage: "Interface language",
+    interfaceLanguageShort: "Language",
+    cardLanguage: "Card language",
+    personalNote: "Personal note",
+    notePlaceholder: "Ex: confusion with the end of the previous ayah",
+    addToCsv: "Add to CSV",
+    downloadCsv: "Download CSV",
+    front: "Front",
+    back: "Back",
+    queuedCards: "Queued cards",
+    close: "Close",
+    clearQueue: "Clear",
+    remove: "Remove",
+    csv: "CSV",
     task: "Recite the context before the error, then continue through the passage you are correcting.",
     anchor: "To lock in this correction: repeat the mistake window {window}x with one line before and one line after, then repeat the half-page {half}x.",
     rangeSame: "Surah {surah}, ayah {ayah}, word {pos}",
     rangeSameWords: "Surah {surah}, ayah {ayah}, words {start}-{end}",
     rangeAcross: "Surah {surah}, {from} -> {to}",
     ayahEnd: "end of ayah",
+    ayahEndShort: "end",
   },
   ar: {
+    appTitle: "Qur'an Error CSV",
+    siteTitle: "Qur'an Error CSV Mobile",
+    loading: "جار التحميل...",
+    loadingCorpus: "جار تحميل المصحف...",
+    ready: "جاهز",
+    loadingPage: "جار تحميل الصفحة {page}...",
+    loadFailed: "تعذر تحميل البيانات.",
+    emptySelection: "لا يوجد تحديد",
+    selectionEmptyError: "التحديد فارغ.",
+    noWordError: "لا يحتوي التحديد على أي كلمة.",
+    selectionCleared: "تم مسح التحديد.",
+    csvUpdated: "تم تحديث بطاقة CSV.",
+    csvAdded: "تمت إضافة البطاقة إلى CSV.",
+    queueEmpty: "لا توجد بطاقات في الانتظار.",
+    queueCleared: "تم تفريغ قائمة CSV.",
+    csvDownloaded: "تم تنزيل ملف CSV.",
+    pageMeta: "الصفحة {page} | {lines} سطر | {range}",
+    pageNumber: "الصفحة {page}",
+    page: "الصفحة",
+    previousPage: "الصفحة السابقة",
+    nextPage: "الصفحة التالية",
+    mushafLabel: "المصحف",
+    exportLabel: "تصدير CSV",
+    error: "الخطأ",
+    clear: "مسح",
+    type: "النوع",
+    difficulty: "الصعوبة",
+    color: "اللون",
+    interfaceLanguage: "لغة الواجهة",
+    interfaceLanguageShort: "اللغة",
+    cardLanguage: "لغة البطاقة",
+    personalNote: "ملاحظة شخصية",
+    notePlaceholder: "مثال: التباس مع نهاية الآية السابقة",
+    addToCsv: "إضافة إلى CSV",
+    downloadCsv: "تنزيل CSV",
+    front: "الوجه",
+    back: "الظهر",
+    queuedCards: "البطاقات في الانتظار",
+    close: "إغلاق",
+    clearQueue: "تفريغ",
+    remove: "حذف",
+    csv: "CSV",
     task: "\u0627\u0642\u0631\u0623 \u0627\u0644\u0633\u064a\u0627\u0642 \u0642\u0628\u0644 \u0627\u0644\u062e\u0637\u0623\u060c \u062b\u0645 \u0623\u0643\u0645\u0644 \u062d\u062a\u0649 \u0627\u0644\u0645\u0648\u0636\u0639 \u0627\u0644\u0630\u064a \u062a\u0631\u064a\u062f \u062a\u062b\u0628\u064a\u062a\u0647.",
     anchor: "\u0645\u0633\u0627\u0639\u062f\u0629 \u0644\u062a\u062b\u0628\u064a\u062a \u0647\u0630\u0627 \u0627\u0644\u062e\u0637\u0623: \u0643\u0631\u0631 \u0645\u0648\u0636\u0639 \u0627\u0644\u062e\u0637\u0623 {window} \u0645\u0631\u0627\u062a \u0645\u0639 \u0633\u0637\u0631 \u0642\u0628\u0644\u0647 \u0648\u0633\u0637\u0631 \u0628\u0639\u062f\u0647\u060c \u062b\u0645 \u0643\u0631\u0631 \u0646\u0635\u0641 \u0627\u0644\u0635\u0641\u062d\u0629 {half} \u0645\u0631\u0627\u062a.",
     rangeSame: "\u0633\u0648\u0631\u0629 {surah}\u060c \u0627\u0644\u0622\u064a\u0629 {ayah}\u060c \u0627\u0644\u0643\u0644\u0645\u0629 {pos}",
     rangeSameWords: "\u0633\u0648\u0631\u0629 {surah}\u060c \u0627\u0644\u0622\u064a\u0629 {ayah}\u060c \u0627\u0644\u0643\u0644\u0645\u0627\u062a {start}-{end}",
     rangeAcross: "\u0633\u0648\u0631\u0629 {surah}\u060c {from} -> {to}",
     ayahEnd: "\u0646\u0647\u0627\u064a\u0629 \u0627\u0644\u0622\u064a\u0629",
+    ayahEndShort: "النهاية",
+  },
+  es: {
+    appTitle: "Qur'an Error CSV",
+    siteTitle: "Qur'an Error CSV Mobile",
+    loading: "Cargando...",
+    loadingCorpus: "Cargando corpus...",
+    ready: "Listo",
+    loadingPage: "Cargando página {page}...",
+    loadFailed: "No se pudieron cargar los datos.",
+    emptySelection: "Sin selección",
+    selectionEmptyError: "Selección vacía.",
+    noWordError: "La selección no contiene ninguna palabra.",
+    selectionCleared: "Selección borrada.",
+    csvUpdated: "Tarjeta CSV actualizada.",
+    csvAdded: "Tarjeta añadida al CSV.",
+    queueEmpty: "No hay tarjetas en espera.",
+    queueCleared: "Cola CSV vaciada.",
+    csvDownloaded: "CSV descargado.",
+    pageMeta: "Página {page} | {lines} líneas | {range}",
+    pageNumber: "Página {page}",
+    page: "Página",
+    previousPage: "Página anterior",
+    nextPage: "Página siguiente",
+    mushafLabel: "Mushaf",
+    exportLabel: "Exportar CSV",
+    error: "Error",
+    clear: "Borrar",
+    type: "Tipo",
+    difficulty: "Dificultad",
+    color: "Color",
+    interfaceLanguage: "Idioma de la interfaz",
+    interfaceLanguageShort: "Idioma",
+    cardLanguage: "Idioma de tarjeta",
+    personalNote: "Nota personal",
+    notePlaceholder: "Ej: confusión con el final de la aleya anterior",
+    addToCsv: "Añadir al CSV",
+    downloadCsv: "Descargar CSV",
+    front: "Anverso",
+    back: "Reverso",
+    queuedCards: "Tarjetas en espera",
+    close: "Cerrar",
+    clearQueue: "Vaciar",
+    remove: "Quitar",
+    csv: "CSV",
+    task: "Recita el contexto antes del error y continúa hasta el pasaje que estás corrigiendo.",
+    anchor: "Para fijar esta corrección: repite {window}x la zona del error con una línea antes y una línea después, luego repite {half}x la media página.",
+    rangeSame: "Sura {surah}, aleya {ayah}, palabra {pos}",
+    rangeSameWords: "Sura {surah}, aleya {ayah}, palabras {start}-{end}",
+    rangeAcross: "Sura {surah}, {from} -> {to}",
+    ayahEnd: "fin de la aleya",
+    ayahEndShort: "fin",
+  },
+  tr: {
+    appTitle: "Qur'an Error CSV",
+    siteTitle: "Qur'an Error CSV Mobile",
+    loading: "Yükleniyor...",
+    loadingCorpus: "Mushaf verisi yükleniyor...",
+    ready: "Hazır",
+    loadingPage: "{page}. sayfa yükleniyor...",
+    loadFailed: "Veriler yüklenemedi.",
+    emptySelection: "Seçim yok",
+    selectionEmptyError: "Seçim boş.",
+    noWordError: "Seçimde kelime yok.",
+    selectionCleared: "Seçim temizlendi.",
+    csvUpdated: "CSV kartı güncellendi.",
+    csvAdded: "Kart CSV'ye eklendi.",
+    queueEmpty: "Bekleyen kart yok.",
+    queueCleared: "CSV kuyruğu temizlendi.",
+    csvDownloaded: "CSV indirildi.",
+    pageMeta: "Sayfa {page} | {lines} satır | {range}",
+    pageNumber: "Sayfa {page}",
+    page: "Sayfa",
+    previousPage: "Önceki sayfa",
+    nextPage: "Sonraki sayfa",
+    mushafLabel: "Mushaf",
+    exportLabel: "CSV dışa aktarımı",
+    error: "Hata",
+    clear: "Temizle",
+    type: "Tür",
+    difficulty: "Zorluk",
+    color: "Renk",
+    interfaceLanguage: "Arayüz dili",
+    interfaceLanguageShort: "Dil",
+    cardLanguage: "Kart dili",
+    personalNote: "Kişisel not",
+    notePlaceholder: "Örn: önceki ayetin sonuyla karıştı",
+    addToCsv: "CSV'ye ekle",
+    downloadCsv: "CSV indir",
+    front: "Ön",
+    back: "Arka",
+    queuedCards: "Bekleyen kartlar",
+    close: "Kapat",
+    clearQueue: "Temizle",
+    remove: "Kaldır",
+    csv: "CSV",
+    task: "Hatanın öncesindeki bağlamı oku, sonra düzelttiğin bölüme kadar devam et.",
+    anchor: "Bu düzeltmeyi pekiştirmek için: hata penceresini bir önceki ve bir sonraki satırla birlikte {window}x tekrar et, sonra yarım sayfayı {half}x tekrar et.",
+    rangeSame: "Sure {surah}, ayet {ayah}, kelime {pos}",
+    rangeSameWords: "Sure {surah}, ayet {ayah}, kelimeler {start}-{end}",
+    rangeAcross: "Sure {surah}, {from} -> {to}",
+    ayahEnd: "ayet sonu",
+    ayahEndShort: "son",
+  },
+  id: {
+    appTitle: "Qur'an Error CSV",
+    siteTitle: "Qur'an Error CSV Mobile",
+    loading: "Memuat...",
+    loadingCorpus: "Memuat data mushaf...",
+    ready: "Siap",
+    loadingPage: "Memuat halaman {page}...",
+    loadFailed: "Data tidak dapat dimuat.",
+    emptySelection: "Belum ada pilihan",
+    selectionEmptyError: "Pilihan kosong.",
+    noWordError: "Pilihan tidak berisi kata.",
+    selectionCleared: "Pilihan dihapus.",
+    csvUpdated: "Kartu CSV diperbarui.",
+    csvAdded: "Kartu ditambahkan ke CSV.",
+    queueEmpty: "Belum ada kartu.",
+    queueCleared: "Antrean CSV dikosongkan.",
+    csvDownloaded: "CSV diunduh.",
+    pageMeta: "Halaman {page} | {lines} baris | {range}",
+    pageNumber: "Halaman {page}",
+    page: "Halaman",
+    previousPage: "Halaman sebelumnya",
+    nextPage: "Halaman berikutnya",
+    mushafLabel: "Mushaf",
+    exportLabel: "Ekspor CSV",
+    error: "Kesalahan",
+    clear: "Hapus",
+    type: "Jenis",
+    difficulty: "Kesulitan",
+    color: "Warna",
+    interfaceLanguage: "Bahasa antarmuka",
+    interfaceLanguageShort: "Bahasa",
+    cardLanguage: "Bahasa kartu",
+    personalNote: "Catatan pribadi",
+    notePlaceholder: "Contoh: tertukar dengan akhir ayat sebelumnya",
+    addToCsv: "Tambahkan ke CSV",
+    downloadCsv: "Unduh CSV",
+    front: "Depan",
+    back: "Belakang",
+    queuedCards: "Kartu tertunda",
+    close: "Tutup",
+    clearQueue: "Kosongkan",
+    remove: "Hapus",
+    csv: "CSV",
+    task: "Bacalah konteks sebelum kesalahan, lalu lanjutkan sampai bagian yang sedang kamu koreksi.",
+    anchor: "Untuk menguatkan koreksi ini: ulangi jendela kesalahan {window}x dengan satu baris sebelum dan satu baris sesudahnya, lalu ulangi setengah halaman {half}x.",
+    rangeSame: "Surah {surah}, ayat {ayah}, kata {pos}",
+    rangeSameWords: "Surah {surah}, ayat {ayah}, kata {start}-{end}",
+    rangeAcross: "Surah {surah}, {from} -> {to}",
+    ayahEnd: "akhir ayat",
+    ayahEndShort: "akhir",
   },
 };
 
@@ -47,6 +353,10 @@ const state = {
   fitRaf: null,
   queue: [],
   activePreviewTab: "front",
+  uiLanguage: preferredLanguage(),
+  cardLanguageTouched: false,
+  statusKey: "loading",
+  statusParams: {},
 };
 
 const els = {};
@@ -55,11 +365,12 @@ document.addEventListener("DOMContentLoaded", boot);
 
 async function boot() {
   bindElements();
+  applyTranslations();
   bindEvents();
   setHighlightColor(els.highlightColor.value);
   state.queue = loadQueue();
   renderQueue();
-  setStatus("Chargement du corpus...");
+  setStatusKey("loadingCorpus");
   try {
     const [manifest, surahs] = await Promise.all([
       fetchJson("data/manifest.json"),
@@ -68,16 +379,17 @@ async function boot() {
     els.pageInput.max = String(manifest.page_count || LAST_PAGE);
     state.surahs = surahs || {};
     await loadPage(1);
-    setStatus("Pret");
+    setStatusKey("ready");
   } catch (error) {
     setError(error.message);
-    els.mushafPage.innerHTML = '<div class="empty">Impossible de charger les donnees.</div>';
+    els.mushafPage.innerHTML = `<div class="empty">${escapeHtml(tr(state.uiLanguage, "loadFailed"))}</div>`;
   }
 }
 
 function bindElements() {
   [
     "statusLine",
+    "uiLanguage",
     "queueButton",
     "queueCount",
     "prevPage",
@@ -109,18 +421,30 @@ function bindElements() {
 }
 
 function bindEvents() {
+  els.uiLanguage.addEventListener("change", () => setUiLanguage(els.uiLanguage.value));
   els.prevPage.addEventListener("click", () => loadPage(state.currentPage - 1));
   els.nextPage.addEventListener("click", () => loadPage(state.currentPage + 1));
   els.pageInput.addEventListener("change", () => loadPage(Number(els.pageInput.value)));
+  els.pageInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      els.pageInput.blur();
+      loadPage(Number(els.pageInput.value));
+    }
+  });
   els.clearSelection.addEventListener("click", clearSelection);
   els.highlightColor.addEventListener("input", () => {
     setHighlightColor(els.highlightColor.value);
     repaintSelection();
     queuePreview();
   });
-  ["errorType", "severity", "cardLanguage", "notes"].forEach((id) => {
+  ["errorType", "severity", "notes"].forEach((id) => {
     els[id].addEventListener("input", queuePreview);
     els[id].addEventListener("change", queuePreview);
+  });
+  els.cardLanguage.addEventListener("change", () => {
+    state.cardLanguageTouched = true;
+    queuePreview();
   });
   els.addToCsv.addEventListener("click", addCurrentCard);
   els.downloadCsv.addEventListener("click", downloadCsv);
@@ -149,6 +473,78 @@ function bindEvents() {
   });
 }
 
+function setUiLanguage(lang) {
+  const previous = state.uiLanguage;
+  state.uiLanguage = normalizeLanguage(lang);
+  try {
+    localStorage.setItem(UI_LANGUAGE_KEY, state.uiLanguage);
+  } catch {
+    // Ignore private-mode storage failures; the current session still updates.
+  }
+  if (!state.cardLanguageTouched || els.cardLanguage.value === previous) {
+    state.cardLanguageTouched = false;
+  }
+  applyTranslations();
+}
+
+function applyTranslations() {
+  const lang = normalizeLanguage(state.uiLanguage);
+  const dir = textDirection(lang);
+  document.documentElement.lang = lang;
+  document.documentElement.dir = dir;
+  document.title = tr(lang, "siteTitle");
+  document.querySelectorAll("[data-i18n]").forEach((node) => {
+    node.textContent = tr(lang, node.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+    node.setAttribute("placeholder", tr(lang, node.dataset.i18nPlaceholder));
+  });
+  document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+    node.setAttribute("aria-label", tr(lang, node.dataset.i18nAriaLabel));
+  });
+
+  populateLanguageSelect(els.uiLanguage, lang);
+  const cardLang = state.cardLanguageTouched ? normalizeLanguage(els.cardLanguage.value) : lang;
+  populateLanguageSelect(els.cardLanguage, cardLang);
+  populateChoiceSelect(els.errorType, "errorTypes", els.errorType.value || "word");
+  populateChoiceSelect(els.severity, "severities", els.severity.value || "difficult");
+
+  if (state.pageData) updatePageMeta();
+  if (state.statusKey) setStatusKey(state.statusKey, state.statusParams);
+  renderQueue();
+  updateSelectionUi(false);
+  if (normalizedSelection()) queuePreview();
+}
+
+function populateLanguageSelect(select, selected) {
+  const value = normalizeLanguage(selected);
+  select.innerHTML = "";
+  LANGUAGE_OPTIONS.forEach((language) => {
+    const option = document.createElement("option");
+    option.value = language.code;
+    option.textContent = language.label;
+    select.appendChild(option);
+  });
+  select.value = value;
+}
+
+function populateChoiceSelect(select, group, selected) {
+  const value = selected || CHOICES[group]?.[0]?.value || "";
+  select.innerHTML = "";
+  (CHOICES[group] || []).forEach((choice) => {
+    const option = document.createElement("option");
+    option.value = choice.value;
+    option.textContent = choiceLabel(group, choice.value, state.uiLanguage);
+    select.appendChild(option);
+  });
+  select.value = (CHOICES[group] || []).some((choice) => choice.value === value) ? value : CHOICES[group]?.[0]?.value || "";
+}
+
+function choiceLabel(group, value, lang) {
+  const choice = (CHOICES[group] || []).find((item) => item.value === value);
+  return choice?.labels?.[normalizeLanguage(lang)] || choice?.labels?.fr || String(value || "");
+}
+
 async function fetchJson(url) {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`HTTP ${response.status}: ${url}`);
@@ -157,7 +553,7 @@ async function fetchJson(url) {
 
 async function loadPage(page) {
   const next = clamp(Number(page) || 1, 1, Number(els.pageInput.max) || LAST_PAGE);
-  setStatus(`Chargement page ${next}...`);
+  setStatusKey("loadingPage", { page: next });
   try {
     const pageData = await getPage(next);
     await loadQcfFont(next);
@@ -168,7 +564,7 @@ async function loadPage(page) {
     renderPage(pageData);
     updateSelectionUi(false);
     queueFitPage();
-    setStatus("Pret");
+    setStatusKey("ready");
   } catch (error) {
     setError(error.message);
   }
@@ -206,7 +602,7 @@ function qcfFontUrl(page) {
 
 function renderPage(pageData) {
   const fontName = qcfFontName(pageData.page);
-  els.pageMeta.textContent = `Page ${pageData.page} | ${pageData.lines.length} lignes | ${pageData.verse_range}`;
+  updatePageMeta();
   els.mushafPage.innerHTML = "";
   els.mushafPage.style.setProperty("--qec-page-font", fontName);
   displayLines(pageData).forEach((line) => {
@@ -236,6 +632,15 @@ function renderPage(pageData) {
       lineEl.appendChild(wordEl);
     });
     els.mushafPage.appendChild(lineEl);
+  });
+}
+
+function updatePageMeta() {
+  if (!state.pageData) return;
+  els.pageMeta.textContent = format(tr(state.uiLanguage, "pageMeta"), {
+    page: state.pageData.page,
+    lines: state.pageData.lines.length,
+    range: state.pageData.verse_range,
   });
 }
 
@@ -333,7 +738,7 @@ function updateSelectionUi(refresh = true) {
   const selected = normalizedSelection();
   els.addToCsv.disabled = !selected;
   if (!selected || !state.pageData) {
-    els.selectionRange.textContent = "Aucune selection";
+    els.selectionRange.textContent = tr(state.uiLanguage, "emptySelection");
     els.anchorPlan.textContent = "";
     els.previewFront.innerHTML = "";
     els.previewBack.innerHTML = "";
@@ -343,7 +748,7 @@ function updateSelectionUi(refresh = true) {
   if (!words.length) return;
   const first = words[0];
   const last = words[words.length - 1];
-  els.selectionRange.textContent = first.location === last.location ? readableLocation(first) : `${readableLocation(first)} -> ${readableLocation(last)}`;
+  els.selectionRange.textContent = first.location === last.location ? readableLocation(first, state.uiLanguage) : `${readableLocation(first, state.uiLanguage)} -> ${readableLocation(last, state.uiLanguage)}`;
   if (refresh) queuePreview();
 }
 
@@ -368,7 +773,7 @@ async function refreshPreview() {
 
 async function buildCurrentPreview() {
   const selected = normalizedSelection();
-  if (!selected || !state.pageData) throw new Error("Selection vide.");
+  if (!selected || !state.pageData) throw new Error(tr(state.uiLanguage, "selectionEmptyError"));
   return buildPreviewFromSelection(state.pageData, await getCorpusAccessor(), selectionFromUi(selected), { fields: false });
 }
 
@@ -377,14 +782,19 @@ async function getCorpusAccessor() {
 }
 
 function selectionFromUi(selected) {
+  const lang = normalizeLanguage(els.cardLanguage.value || state.uiLanguage);
+  const errorTypeKey = els.errorType.value || "word";
+  const severityKey = els.severity.value || "difficult";
   return {
     page: state.currentPage,
     startId: selected.start,
     endId: selected.end,
-    errorType: els.errorType.value.trim() || "Mot",
-    severity: els.severity.value.trim() || "Difficile",
+    errorType: choiceLabel("errorTypes", errorTypeKey, lang),
+    severity: choiceLabel("severities", severityKey, lang),
+    errorTypeKey,
+    severityKey,
     highlightColor: normalizeHexColor(els.highlightColor.value),
-    language: els.cardLanguage.value || "fr",
+    language: lang,
     notes: els.notes.value.trim(),
   };
 }
@@ -402,12 +812,12 @@ async function buildPreviewFromSelection(pageData, getPageFn, selection, options
   const startId = Math.min(selection.startId, selection.endId);
   const endId = Math.max(selection.startId, selection.endId);
   const task = tr(lang, "task");
-  const anchorPlan = anchorPlanText(selection.severity, lang);
+  const anchorPlan = anchorPlanText(selection.severityKey || selection.severity, lang);
   const errorRange = errorRangeText(pageData, selection, lang);
   const promptHtml = renderPageHtml(contextData, { half: contextHalf, highlightColor: selection.highlightColor });
   const answerHtml = renderPageHtml(pageData, { highlight: [startId, endId], highlightColor: selection.highlightColor });
   const metaFront = [surah, unit, selection.errorType, selection.severity].filter(Boolean);
-  const metaBack = [surah, `Page ${selection.page}`, errorRange].filter(Boolean);
+  const metaBack = [surah, format(tr(lang, "pageNumber"), { page: selection.page }), errorRange].filter(Boolean);
   const id = selectionKey(selection);
   const frontContent = cardContent({
     id,
@@ -449,10 +859,10 @@ async function addCurrentCard() {
     const existingIndex = state.queue.findIndex((item) => item.id === card.id);
     if (existingIndex >= 0) {
       state.queue[existingIndex] = card;
-      setStatus("Carte CSV mise a jour.");
+      setStatusKey("csvUpdated");
     } else {
       state.queue.push(card);
-      setStatus("Carte ajoutee au CSV.");
+      setStatusKey("csvAdded");
     }
     saveQueue();
     renderQueue();
@@ -480,7 +890,7 @@ function renderQueue() {
   els.clearQueue.disabled = state.queue.length === 0;
   els.queueList.innerHTML = "";
   if (!state.queue.length) {
-    els.queueList.innerHTML = '<div class="empty">Aucune carte en attente.</div>';
+    els.queueList.innerHTML = `<div class="empty">${escapeHtml(tr(state.uiLanguage, "queueEmpty"))}</div>`;
     return;
   }
   state.queue.forEach((item) => {
@@ -489,7 +899,7 @@ function renderQueue() {
     row.innerHTML = `<strong>${escapeHtml(item.meta.unit)} | ${escapeHtml(item.meta.surah)}</strong><span>${escapeHtml(item.meta.errorRange)}</span><span>${escapeHtml(item.meta.errorType)} | ${escapeHtml(item.meta.severity)}</span>`;
     const remove = document.createElement("button");
     remove.type = "button";
-    remove.textContent = "Retirer";
+    remove.textContent = tr(state.uiLanguage, "remove");
     remove.addEventListener("click", () => {
       state.queue = state.queue.filter((card) => card.id !== item.id);
       saveQueue();
@@ -511,7 +921,7 @@ function clearQueue() {
   state.queue = [];
   saveQueue();
   renderQueue();
-  setStatus("File CSV videe.");
+  setStatusKey("queueCleared");
 }
 
 function downloadCsv() {
@@ -527,7 +937,7 @@ function downloadCsv() {
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
-  setStatus("CSV telecharge.");
+  setStatusKey("csvDownloaded");
 }
 
 function buildCsv(cards) {
@@ -800,7 +1210,7 @@ function selectedWords(pageData, selection) {
 
 function firstSelectedWord(pageData, selection) {
   const words = selectedWords(pageData, selection);
-  if (!words.length) throw new Error("La selection ne contient aucun mot.");
+  if (!words.length) throw new Error(tr(state.uiLanguage, "noWordError"));
   return words[0];
 }
 
@@ -820,8 +1230,8 @@ function parseLocation(word) {
   return { surah: key.surah, ayah: key.ayah, position: isEnd ? null : Number(word.position), isEnd };
 }
 
-function readableLocation(word) {
-  return String(word.location || "").replace(/:end$/, ":fin");
+function readableLocation(word, lang = state.uiLanguage) {
+  return String(word.location || "").replace(/:end$/, `:${tr(lang, "ayahEndShort")}`);
 }
 
 function surahDisplayName(number) {
@@ -851,8 +1261,8 @@ function anchorPlanText(severity, lang) {
 
 function severityBucket(value) {
   const normalized = normalizeText(value);
-  if (["repete", "repeated", "repete", "repetido"].includes(normalized)) return "repeated";
-  if (["oublie", "forgotten", "again", "olvidado"].includes(normalized)) return "forgotten";
+  if (["repeated", "repete", "repetido", "tekrarli", "berulang", "متكرر"].includes(normalized)) return "repeated";
+  if (["forgotten", "oublie", "again", "olvidado", "unutuldu", "lupa", "منسي"].includes(normalized)) return "forgotten";
   return "difficult";
 }
 
@@ -880,7 +1290,8 @@ function normalizeHexColor(color) {
 }
 
 function normalizeLanguage(lang) {
-  return ["fr", "en", "ar"].includes(lang) ? lang : "fr";
+  const code = String(lang || "").toLowerCase().slice(0, 2);
+  return LANGUAGE_OPTIONS.some((language) => language.code === code) ? code : "fr";
 }
 
 function textDirection(lang) {
@@ -903,15 +1314,38 @@ function clearSelection() {
   state.selection = null;
   repaintSelection();
   updateSelectionUi(false);
-  setStatus("Selection effacee.");
+  setStatusKey("selectionCleared");
 }
 
-function setStatus(message) {
+function preferredLanguage() {
+  try {
+    const stored = localStorage.getItem(UI_LANGUAGE_KEY);
+    if (stored) return normalizeLanguage(stored);
+  } catch {
+    // Ignore inaccessible localStorage.
+  }
+  const browserLanguage = navigator.language || navigator.userLanguage || "fr";
+  return normalizeLanguage(browserLanguage);
+}
+
+function setStatusKey(key, params = {}) {
+  state.statusKey = key;
+  state.statusParams = params;
+  setStatus(format(tr(state.uiLanguage, key), params), { preserveKey: true });
+}
+
+function setStatus(message, options = {}) {
+  if (!options.preserveKey) {
+    state.statusKey = null;
+    state.statusParams = {};
+  }
   els.statusLine.classList.remove("error");
   els.statusLine.textContent = message;
 }
 
 function setError(message) {
+  state.statusKey = null;
+  state.statusParams = {};
   els.statusLine.classList.add("error");
   els.statusLine.textContent = message;
 }

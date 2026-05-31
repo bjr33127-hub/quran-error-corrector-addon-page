@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -15,24 +15,30 @@
           <span class="brand-mark">QEC</span>
           <div>
             <h1>Qur'an Error CSV</h1>
-            <p id="statusLine">Chargement...</p>
+            <p id="statusLine" data-i18n="loading">Chargement...</p>
           </div>
         </div>
-        <button id="queueButton" class="queue-button" type="button">
-          <span id="queueCount">0</span>
-          <span>CSV</span>
-        </button>
+        <div class="topbar-actions">
+          <label class="ui-language">
+            <span data-i18n="interfaceLanguageShort">Langue</span>
+            <select id="uiLanguage" data-i18n-aria-label="interfaceLanguage"></select>
+          </label>
+          <button id="queueButton" class="queue-button" type="button">
+            <span id="queueCount">0</span>
+            <span data-i18n="csv">CSV</span>
+          </button>
+        </div>
       </header>
 
       <main class="workspace">
-        <section class="mushaf-card" aria-label="Mushaf">
+        <section class="mushaf-card" aria-label="Mushaf" data-i18n-aria-label="mushafLabel">
           <div class="page-toolbar">
-            <button id="prevPage" class="icon-button" type="button" aria-label="Page precedente">‹</button>
+            <button id="prevPage" class="icon-button" type="button" aria-label="Page précédente" data-i18n-aria-label="previousPage">‹</button>
             <label class="page-input-wrap">
-              <span>Page</span>
+              <span data-i18n="page">Page</span>
               <input id="pageInput" type="number" min="1" max="604" value="1" inputmode="numeric">
             </label>
-            <button id="nextPage" class="icon-button" type="button" aria-label="Page suivante">›</button>
+            <button id="nextPage" class="icon-button" type="button" aria-label="Page suivante" data-i18n-aria-label="nextPage">›</button>
           </div>
           <div id="pageMeta" class="page-meta">Page 1</div>
           <div id="mushafStage" class="mushaf-stage">
@@ -40,60 +46,47 @@
           </div>
         </section>
 
-        <section class="control-sheet" aria-label="Export CSV">
+        <section class="control-sheet" aria-label="Export CSV" data-i18n-aria-label="exportLabel">
           <div class="selection-summary">
             <div>
-              <span class="eyebrow">Erreur</span>
-              <strong id="selectionRange">Aucune selection</strong>
+              <span class="eyebrow" data-i18n="error">Erreur</span>
+              <strong id="selectionRange" data-i18n="emptySelection">Aucune sélection</strong>
             </div>
-            <button id="clearSelection" type="button">Effacer</button>
+            <button id="clearSelection" type="button" data-i18n="clear">Effacer</button>
           </div>
 
           <div class="form-grid">
             <label>
-              <span>Type</span>
-              <select id="errorType">
-                <option>Mot</option>
-                <option>Transition</option>
-                <option>Waqf</option>
-                <option>Tajwid</option>
-              </select>
+              <span data-i18n="type">Type</span>
+              <select id="errorType"></select>
             </label>
             <label>
-              <span>Difficulte</span>
-              <select id="severity">
-                <option>Difficile</option>
-                <option>Oublie</option>
-                <option>Repete</option>
-              </select>
+              <span data-i18n="difficulty">Difficulté</span>
+              <select id="severity"></select>
             </label>
             <label>
-              <span>Couleur</span>
+              <span data-i18n="color">Couleur</span>
               <input id="highlightColor" type="color" value="#ffd76a">
             </label>
             <label>
-              <span>Langue carte</span>
-              <select id="cardLanguage">
-                <option value="fr">Francais</option>
-                <option value="en">English</option>
-                <option value="ar">Arabic</option>
-              </select>
+              <span data-i18n="cardLanguage">Langue carte</span>
+              <select id="cardLanguage"></select>
             </label>
           </div>
 
           <label class="note-field">
-            <span>Note perso</span>
-            <textarea id="notes" rows="2" placeholder="Ex: confusion avec la fin du verset precedent"></textarea>
+            <span data-i18n="personalNote">Note perso</span>
+            <textarea id="notes" rows="2" placeholder="Ex: confusion avec la fin du verset précédent" data-i18n-placeholder="notePlaceholder"></textarea>
           </label>
 
           <div class="primary-actions">
-            <button id="addToCsv" class="primary" type="button" disabled>Ajouter au CSV</button>
-            <button id="downloadCsv" class="secondary" type="button" disabled>Telecharger CSV</button>
+            <button id="addToCsv" class="primary" type="button" disabled data-i18n="addToCsv">Ajouter au CSV</button>
+            <button id="downloadCsv" class="secondary" type="button" disabled data-i18n="downloadCsv">Télécharger CSV</button>
           </div>
 
           <div class="preview-tabs">
-            <button class="tab active" data-tab="front" type="button">Recto</button>
-            <button class="tab" data-tab="back" type="button">Verso</button>
+            <button class="tab active" data-tab="front" type="button" data-i18n="front">Recto</button>
+            <button class="tab" data-tab="back" type="button" data-i18n="back">Verso</button>
           </div>
           <div id="anchorPlan" class="anchor-plan"></div>
           <div id="previewFront" class="preview active"></div>
@@ -103,13 +96,13 @@
 
       <dialog id="queueDialog" class="queue-dialog">
         <div class="dialog-head">
-          <h2>Cartes en attente</h2>
-          <button id="closeQueue" class="icon-button" type="button" aria-label="Fermer">×</button>
+          <h2 data-i18n="queuedCards">Cartes en attente</h2>
+          <button id="closeQueue" class="icon-button" type="button" aria-label="Fermer" data-i18n-aria-label="close">×</button>
         </div>
         <div id="queueList" class="queue-list"></div>
         <div class="dialog-actions">
-          <button id="clearQueue" type="button">Vider</button>
-          <button id="downloadCsvDialog" class="primary" type="button">Telecharger CSV</button>
+          <button id="clearQueue" type="button" data-i18n="clearQueue">Vider</button>
+          <button id="downloadCsvDialog" class="primary" type="button" data-i18n="downloadCsv">Télécharger CSV</button>
         </div>
       </dialog>
     </div>

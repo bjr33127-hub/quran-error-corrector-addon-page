@@ -1,10 +1,10 @@
-# Qur'an Error Corrector
+# Qur'an Error Corrector - Quran Memorization FSRS | مصحح أخطاء القرآن
 
-**Qur'an Error Corrector** is an Anki add-on for one very specific moment: you have just finished your normal Qur'an revision, you noticed a mistake, and you want Anki/FSRS to help you repair that exact weak spot without taking over your whole revision routine.
+**Qur'an Error Corrector** is an Anki add-on for one very specific moment: you have just finished your normal Qur'an revision, you noticed a mistake, and you want Anki/FSRS to help you repair that exact weak spot without turning the whole mushaf into a giant deck.
 
-It is not meant to turn the whole mushaf into a giant deck. You keep your normal revision load outside Anki, then use Anki only for the half-pages and passages that actually caused trouble.
+You keep your normal revision load outside Anki. The add-on is only for the half-pages and passages where mistakes actually happened.
 
-![Qur'an Error Corrector overview](https://bjr33127-hub.github.io/quran-error-corrector-addon-page/assets/cover.png)
+![Qur'an Error Corrector overview](https://bjr33127-hub.github.io/quran-error-corrector-addon-page/assets/cover-new.png)
 
 ## The Workflow
 
@@ -12,7 +12,7 @@ It is not meant to turn the whole mushaf into a giant deck. You keep your normal
 2. Open **Tools -> Qur'an Error Corrector**.
 3. Go to the Madani-style page where the mistake happened.
 4. Select the exact word or passage.
-5. Choose the mistake type and difficulty.
+5. Choose the mistake type, difficulty, and highlight color.
 6. Create the card.
 7. Let Anki/FSRS bring that correction back at the right time.
 
@@ -24,16 +24,29 @@ It is not meant to turn the whole mushaf into a giant deck. You keep your normal
 - **Back:** the full page with the mistake highlighted.
 - **Anchoring help:** a short correction routine adapted to the difficulty.
 - **Automatic tags:** surah, mistake type, and difficulty.
+- **Custom highlight color:** choose the color that makes the error easiest to spot.
 
-![Front and back card anatomy](https://bjr33127-hub.github.io/quran-error-corrector-addon-page/assets/card-anatomy.png)
+![Front and back card anatomy](https://bjr33127-hub.github.io/quran-error-corrector-addon-page/assets/card-anatomy-new.png)
 
 ## Built For Qur'an Revision
 
-Qur'an revision is sequential. A mistake rarely lives as an isolated word floating outside the page. The add-on keeps the page as the mental landmark, but uses half-page context to make the prompt focused enough for spaced repetition.
+Qur'an revision is sequential. A mistake rarely lives as an isolated word floating outside the page. This add-on keeps the page as the mental landmark, but uses half-page context to make the prompt focused enough for spaced repetition.
 
 It also avoids cutting the prompt at arbitrary places. Half-page boundaries are adjusted to clear stopping points or verse endings whenever possible, so the card feels natural to recite.
 
 ![Correction workflow](https://bjr33127-hub.github.io/quran-error-corrector-addon-page/assets/workflow.png)
+
+## Using Anki On iPhone?
+
+You use Anki on your iPhone and you are frustrated that mobile Anki cannot run add-ons? No panic: I made exactly what you need.
+
+Use the mobile CSV companion site:
+
+https://bjr33127-hub.github.io/quran-error-corrector-addon-page/mobile/
+
+It gives you almost the same workflow as the add-on: select the error on the mushaf page, choose the type and difficulty, preview the front/back, then export everything as a two-column CSV file.
+
+On iPhone, download the CSV, tap **Open with -> Anki**, and import your errors. During import, make sure the fields match correctly: **Front** with **Front**, **Back** with **Back**, and leave **Tags** empty.
 
 ## Languages
 
@@ -59,7 +72,7 @@ During review, the card asks you to recite the context first, then continue into
 - Designed for Anki 25.x.
 - Works best with FSRS enabled in your deck options.
 - Uses QCF V2 page fonts for the rendered mushaf pages.
-- The add-on creates targeted correction cards; Anki remains responsible for scheduling.
+- The add-on creates targeted Qur'an memorization correction cards; Anki remains responsible for scheduling.
 
 ## Good Fit If...
 
